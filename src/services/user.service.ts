@@ -47,7 +47,10 @@ export class UserService {
           reply: true,
           adr: true,
           mobile: true
-        }
+        },
+        loginType: 'Email/Password',
+        lastLogin: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+        passwordExpiryDate: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toISOString()
       },
       {
         id: '2',
@@ -65,7 +68,10 @@ export class UserService {
           reply: true,
           adr: true,
           mobile: false
-        }
+        },
+        loginType: 'SSO',
+        lastLogin: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+        passwordExpiryDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString()
       },
       {
         id: '3',
@@ -83,7 +89,10 @@ export class UserService {
           reply: false,
           adr: false,
           mobile: false
-        }
+        },
+        loginType: 'Email/Password',
+        lastLogin: null,
+        passwordExpiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
       },
       {
         id: '4',
@@ -101,7 +110,10 @@ export class UserService {
           reply: true,
           adr: false,
           mobile: true
-        }
+        },
+        loginType: 'Email/Password',
+        lastLogin: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+        passwordExpiryDate: new Date(Date.now() + 75 * 24 * 60 * 60 * 1000).toISOString()
       },
       {
         id: '5',
@@ -119,7 +131,10 @@ export class UserService {
           reply: false,
           adr: true,
           mobile: false
-        }
+        },
+        loginType: 'SSO',
+        lastLogin: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+        passwordExpiryDate: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000).toISOString()
       },
       {
         id: '6',
@@ -137,7 +152,10 @@ export class UserService {
           reply: false,
           adr: false,
           mobile: false
-        }
+        },
+        loginType: 'Email/Password',
+        lastLogin: null,
+        passwordExpiryDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString()
       },
       {
         id: '7',
@@ -155,7 +173,10 @@ export class UserService {
           reply: true,
           adr: true,
           mobile: true
-        }
+        },
+        loginType: 'Google OAuth',
+        lastLogin: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+        passwordExpiryDate: new Date(Date.now() + 88 * 24 * 60 * 60 * 1000).toISOString()
       },
       {
         id: '8',
@@ -173,7 +194,10 @@ export class UserService {
           reply: true,
           adr: false,
           mobile: false
-        }
+        },
+        loginType: 'SSO',
+        lastLogin: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+        passwordExpiryDate: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toISOString()
       }
     ];
 

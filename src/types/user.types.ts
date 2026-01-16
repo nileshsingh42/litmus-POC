@@ -15,8 +15,11 @@ export interface User {
   userType: string;
   addedVia: string;
   addedDate: string;
-  status: 'Active' | 'Unverified';
+  status: 'Active' | 'Unverified' | 'Inactive' | 'Disabled';
   permissions: UserPermissions;
+  loginType: string;
+  lastLogin: string | null;
+  passwordExpiryDate: string;
 }
 
 export interface DatabaseUser {

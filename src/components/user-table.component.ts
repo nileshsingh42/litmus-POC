@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { User, UserPermissions, BulkActionState } from '../types/user.types';
 import { CustomToggleComponent } from './custom-toggle.component';
 import { StatusBadgeComponent } from './status-badge.component';
+import { UserDetailsComponent } from './user-details.component';
 
 @Component({
   selector: 'app-user-table',
   standalone: true,
-  imports: [CommonModule, CustomToggleComponent, StatusBadgeComponent],
+  imports: [CommonModule, CustomToggleComponent, StatusBadgeComponent, UserDetailsComponent],
   template: `
     <div class="table-container">
       <table class="user-table">
@@ -49,7 +50,16 @@ import { StatusBadgeComponent } from './status-badge.component';
               <div class="user-info">
                 <div class="avatar">{{ getInitials(user.name) }}</div>
                 <div class="user-details">
-                  <div class="user-name">{{ user.name }}</div>
+                  <div class="user-name-row">
+                    <span class="user-name">{{ user.name }}</span>
+                    <button class="info-icon" (click)="openUserDetails(user)" title="View user details">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="16" x2="12" y2="12"/>
+                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                      </svg>
+                    </button>
+                  </div>
                   <div class="user-phone">{{ user.phone }}</div>
                 </div>
               </div>
@@ -114,6 +124,12 @@ import { StatusBadgeComponent } from './status-badge.component';
         </tbody>
       </table>
     </div>
+
+    <app-user-details
+      [user]="selectedUserForDetails"
+      [isOpen]="isUserDetailsOpen"
+      (closeModal)="closeUserDetails()"
+    />
   `,
   styles: [`
     .table-container {
@@ -203,9 +219,38 @@ import { StatusBadgeComponent } from './status-badge.component';
       gap: 4px;
     }
 
+    .user-name-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     .user-name {
       font-weight: 500;
       color: var(--foreground);
+    }
+
+    .info-icon {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px;
+      color: var(--muted-foreground);
+      border-radius: 4px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+    }
+
+    .user-info:hover .info-icon {
+      opacity: 1;
+    }
+
+    .info-icon:hover {
+      background-color: var(--muted);
+      color: var(--primary);
     }
 
     .user-phone {
@@ -262,6 +307,9 @@ export class UserTableComponent {
   @Input() bulkActionState: BulkActionState | null = null;
   @Output() selectionChange = new EventEmitter<Set<string>>();
   @Output() permissionChange = new EventEmitter<{ userId: string; permission: keyof UserPermissions; value: boolean }>();
+
+  selectedUserForDetails: User | null = null;
+  isUserDetailsOpen = false;
 
   isSelected(userId: string): boolean {
     return this.selectedUserIds.has(userId);
@@ -334,5 +382,15 @@ export class UserTableComponent {
     if (action === 'disable' && currentValue) return true;
 
     return false;
+  }
+
+  openUserDetails(user: User): void {
+    this.selectedUserForDetails = user;
+    this.isUserDetailsOpen = true;
+  }
+
+  closeUserDetails(): void {
+    this.isUserDetailsOpen = false;
+    this.selectedUserForDetails = null;
   }
 }
